@@ -1,0 +1,23 @@
+# Credentials and Config
+config.json
+service_account.json
+*.json
+!app.json
+
+# Environment
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# IDEs
+.vscode/
+.idea/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
