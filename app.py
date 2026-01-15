@@ -116,12 +116,28 @@ if st.session_state["page"] == "run_pipeline":
     with col1:
         st.markdown("### 📅 Date Range")
         with st.container(border=True):
-            # defaults
-            default_start = config.START_DATE.date() if config.START_DATE else date(2025, 1, 1)
-            default_end = config.END_DATE.date() if config.END_DATE else date.today()
+            # Defaults: Use config if valid, else default to Last 7 Days relative to today
+            today = date.today()
             
-            start_date = st.date_input("Start Date", value=default_start)
-            end_date = st.date_input("End Date", value=default_end)
+            # Parsing from config
+            conf_start = config.START_DATE.date() if config.START_DATE else None
+            conf_end = config.END_DATE.date() if config.END_DATE else None
+            
+            if conf_start and conf_end:
+                 default_start = conf_start
+                 default_end = conf_end
+            elif conf_end:
+                 default_end = conf_end
+                 default_start = conf_end - timedelta(days=7)
+            elif conf_start:
+                 default_start = conf_start
+                 default_end = conf_start + timedelta(days=7)
+            else:
+                default_end = today
+                default_start = today - timedelta(days=7)
+            
+            start_date = st.date_input("Start Date", value=default_start, format="DD/MM/YYYY")
+            end_date = st.date_input("End Date", value=default_end, format="DD/MM/YYYY")
     
     with col2:
         st.markdown("### 🚀 Actions")

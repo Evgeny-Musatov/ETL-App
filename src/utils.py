@@ -3,21 +3,36 @@ from datetime import datetime
 
 def parse_tab_date(tab_name, year=None):
     """
-    Parses tab names like '1212' -> 12/12/YEAR
+    Parses tab names. Supports:
+    1. 'DDMM' (e.g. '1212') -> 12/12/YEAR
+    2. 'DD/MM/YYYY' (e.g. '12/12/2026', '12-12-2026', '12.12.2026')
     Returns datetime or None
     """
-    if not tab_name.isdigit() or len(tab_name) != 4:
-        return None
+    s = str(tab_name).strip()
 
     from src.config import YEAR as DEFAULT_YEAR
     target_year = year if year else DEFAULT_YEAR
 
-    try:
-        day = int(tab_name[:2])
-        month = int(tab_name[2:])
-        return datetime(target_year, month, day)
-    except ValueError:
-        return None
+    # 1. Try explicit full date formats (DD/MM/YYYY)
+    full_date_patterns = [
+        "%d/%m/%Y", "%d-%m-%Y", "%d.%m.%Y"
+    ]
+    for p in full_date_patterns:
+        try:
+            return datetime.strptime(s, p)
+        except ValueError:
+            pass
+
+    # 2. Try DDMM (must be exactly 4 digits)
+    if s.isdigit() and len(s) == 4:
+        try:
+            day = int(s[:2])
+            month = int(s[2:])
+            return datetime(target_year, month, day)
+        except ValueError:
+            pass
+
+    return None
 
 
 def parse_col_date(col_name, year=None):

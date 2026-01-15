@@ -8,7 +8,18 @@ CONFIG_PATH = "config.json"
 
 def load_config():
     if not os.path.exists(CONFIG_PATH):
-        raise FileNotFoundError(f"Config file not found at {CONFIG_PATH}")
+        print(f"⚠️ Config file not found at {CONFIG_PATH}. Creating skeleton...")
+        skeleton = {
+            "source_sheet_id": "",
+            "target_sheet_id": "",
+            "service_account_file": "src/gcp-service-account/service_account.json",
+            "start_date": "",
+            "end_date": ""
+        }
+        with open(CONFIG_PATH, "w", encoding="utf-8") as f:
+            json.dump(skeleton, f, indent=4)
+        print("✅ Created config.json. Please update it with your settings.")
+        return skeleton
     
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return json.load(f)

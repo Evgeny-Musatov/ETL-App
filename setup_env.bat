@@ -15,5 +15,5 @@ echo Installing dependencies...
 
 echo.
 echo ✅ Setup complete!
-echo You can now run "run_gui.bat" to start the application.
+echo You can now run "run_app.bat" to start the application.
 pause
