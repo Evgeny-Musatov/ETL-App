@@ -22,7 +22,7 @@ ETL-App-main/
 ├── config.json            # Configuration (auto-generated if missing)
 ├── run_app.command        # macOS launcher script
 ├── run_app.bat            # Windows launcher script
-├── setup_env.sh           # macOS setup script
+├── setup_env.command       # macOS setup script
 ├── setup_env.bat          # Windows setup script
 ├── src/
 │   ├── config.py          # Configuration loader and constants
@@ -245,7 +245,7 @@ flowchart TD
 
 **Virtual Environment Not Found**:
 - **Symptom**: Script exits with "Virtual environment (.venv) not found"
-- **Solution**: Run `setup_env.sh` (macOS) or `setup_env.bat` (Windows) first
+- **Solution**: Run `setup_env.command` (macOS) or `setup_env.bat` (Windows) first
 
 **Connection Hangs**:
 - **Symptom**: App hangs at "Connecting..."
@@ -266,8 +266,8 @@ flowchart TD
   - Ensure source sheet has data in selected tabs
 
 **Config File Missing**:
-- **Symptom**: Error: "Config file not found at config.json. Please run setup_env.sh (macOS) or setup_env.bat (Windows) first to create it."
-- **Solution**: Run the setup script (`setup_env.sh` or `setup_env.bat`) to create `config.json`, then edit it with your sheet IDs
+- **Symptom**: Error: "Config file not found at config.json. Please run setup_env.command (macOS) or setup_env.bat (Windows) first to create it."
+- **Solution**: Run the setup script (`setup_env.command` or `setup_env.bat`) to create `config.json`, then edit it with your sheet IDs
 
 ---
 

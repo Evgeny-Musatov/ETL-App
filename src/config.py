@@ -10,7 +10,7 @@ def load_config():
     if not os.path.exists(CONFIG_PATH):
         raise FileNotFoundError(
             f"Config file not found at {CONFIG_PATH}. "
-            "Please run setup_env.sh (macOS) or setup_env.bat (Windows) first to create it."
+            "Please run setup_env.command (macOS) or setup_env.bat (Windows) first to create it."
         )
     
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
