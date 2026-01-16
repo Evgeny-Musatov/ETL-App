@@ -10,11 +10,16 @@ This tool automates the process of reading data from Source Google Sheets, clean
 2.  **Run**: Double-click `run_app.bat`.
 
 ### macOS
-1.  **Setup**: Double-click `setup_env.sh` (First time only).
-    > **Note**: If it doesn't run, open Terminal, navigate to the folder, and run:
+1.  **Setup**: Double-click `setup_env.command` (First time only).
+    > **Note**: If you get a Gatekeeper warning, remove quarantine attributes first:
     > ```bash
-    > chmod +x setup_env.sh
-    > ./setup_env.sh
+    > xattr -d com.apple.quarantine setup_env.command
+    > xattr -d com.apple.quarantine run_app.command
+    > ```
+    > Or if it doesn't run, open Terminal, navigate to the folder, and run:
+    > ```bash
+    > chmod +x setup_env.command
+    > ./setup_env.command
     > ```
 2.  **Run**: Double-click `run_app.command`.
     > **Note**: If it doesn't run, open Terminal, navigate to the folder, and run:
@@ -24,8 +29,13 @@ This tool automates the process of reading data from Source Google Sheets, clean
 
 ## 🛠 Configuration
 
--   **Service Account**: Ensure `src/gcp-service-account/service_account.json` exists.
--   **Sheet IDs**: Modify `config.json`. If missing, the app will generate a skeleton `config.json` on first run.
+After running the setup script, you need to configure:
+
+1.  **Service Account**: Place your Google Cloud service account JSON file at:
+    `src/gcp-service-account/service_account.json`
+2.  **Sheet IDs**: Edit `config.json` (created by setup script) and add your:
+    - `source_sheet_id`: The Google Sheet ID to read data from
+    - `target_sheet_id`: The Google Sheet ID to write cleaned data to
 
 ## 🧩 Logic Notes
 
@@ -37,7 +47,15 @@ This tool automates the process of reading data from Source Google Sheets, clean
 ## 🐛 Troubleshooting
 
 -   **App Won't Start (Windows)**: If the app opens and closes immediately or says "Address already in use":
-    1.  Double-click `kill_app.bat` to force-close any stuck background processes.
+    1.  Close any other Streamlit instances that might be running.
     2.  Try `run_app.bat` again.
+-   **App Won't Start (macOS)**: If you get a Gatekeeper warning when double-clicking:
+    1.  Remove quarantine attributes from both scripts:
+        ```bash
+        xattr -d com.apple.quarantine setup_env.command
+        xattr -d com.apple.quarantine run_app.command
+        ```
+    2.  Or right-click and select "Open" to bypass Gatekeeper once (works for each file individually).
 -   **Connecting hangs**: If the app hangs at "Connecting...", check your internet connection and ensure the service account file is valid.
+-   **Config file missing**: If you see an error about `config.json` not found, run the setup script first (`setup_env.command` on macOS or `setup_env.bat` on Windows).
 
